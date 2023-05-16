@@ -19,13 +19,13 @@ namespace RPGMaker.Codebase.Addon
             {
                 if (playModeStateChange == PlayModeStateChange.EnteredEditMode)
                 {
-                    Initialize(Action);
+                    Initialize();
                 }
             };
-            Initialize(Action);
+            Initialize();
         }
 
-        private static async Task Initialize(Action action) {
+        private static async Task Initialize() {
             await Task.Delay(10);
 
             foreach (var info in AddonManager.Instance.GetAddonRuntimeInfos())
@@ -39,7 +39,7 @@ namespace RPGMaker.Codebase.Addon
                         if (obj is bool && (bool) obj)
                         {
                             await Task.Delay(500);
-                            action.Invoke();
+                            OnInitialize();
                         }
                     }
                     break;
@@ -51,7 +51,7 @@ namespace RPGMaker.Codebase.Addon
         /// unity起動時、プレイモード終了時に呼び出される処理
         /// Processes called at Unity startup and when exiting play mode.
         /// </summary>
-        private static void Action() {
+        private static void OnInitialize() {
             CheckAndAddScene(_scenePath);
         }
 
